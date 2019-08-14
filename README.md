@@ -1,6 +1,10 @@
 # TypeScript Cheat Sheet
 Cheat Sheet for TypeScript. Please file an issue if you encounter a problem and PR always welcome.
 
+### Table of Contents
+
+<details>
+
 <summary><b>Expand Table of Contents</b></summary>
 
 - [Section 1: Setup](#section-1-setup)
@@ -11,7 +15,10 @@ Cheat Sheet for TypeScript. Please file an issue if you encounter a problem and 
   - [Union](#union)
   - [Any](#any)
   - [Void](#void)
+- [Section 3: Interface](#section-3-interface)
+- [Section 4: Type Alias](#section-4-type-alias)
 
+</details>
 # Section 1: Setup
 
 1) Go to [TypeScript](https://www.typescriptlang.org) download from there or just type `npm install -g typescript`.
@@ -91,22 +98,161 @@ If you don't know the actual data type or you don't want to assign a data type y
 ```ts
 let detail: any;
 detail = "Developer";
-// or
-detail = 45;
 
 function getValue(): any {
   return "Developer";
-  // or
-  return 45;
 }
 ```
 
 ## Void 
 
-This is usefull when you are not returning something from a function, which is not mandatory.
+This is usefull when you are not returning anything from the function(this is not mandatory to include).
 
 ```ts
 function getError(): void {
   console.log("TypeScript is a SuperSet of JavaScript");
 }
+```
+
+# Section 3: Interface
+
+An Interface is a group of properties and methods that describe an object but neither does initialization nor implementation.
+
+```ts
+interface User {
+  name: string;
+  age: number;
+  getPoints(point: number): number;
+}
+
+let user: User = {
+  name: "John Doe",
+  age: 25,
+  getPoints(point: number): number {
+    return point * point;
+  }
+}
+```
+
+We can make properties and parameters optional.
+
+```ts
+interface User {
+  name?: string;
+  age: number;
+  getPoints(point?: number): number;
+}
+
+let user: User = {
+  age: 25,
+  getPoints(): number {
+    return 5 * 5;
+  }
+}
+```
+
+# Section 4: Type Alias
+
+Type Alias creates a new name for a type.
+
+```ts
+type GetArea = (width: number, height: number) => number;
+
+interface Rectangle {
+  getArea: GetArea;
+}
+
+let rectangle: Rectangle = {
+  getArea(width: number, height: number): number {
+    return width * height;
+  }
+}
+```
+
+> Aliasing doesn’t actually create a new type - it creates a new name to refer to that type. Aliasing a primitive is not terribly useful, though it can be used as a form of documentation.
+
+# Section 5: Class
+
+Just like the other language TypeScript has a class feature. 
+
+```ts
+class Product {
+  name: string;
+  price: number;
+
+  constructor(name: string, price: number) {
+    this.name = name;
+    this.price = price;
+  }
+
+  getTotalPrice(discount: number): number {
+    return this.price - discount;
+  }
+}
+
+const product = new Product("Milk", 250);
+```
+
+We can add interface for product class.
+
+```ts
+interface IProduct {
+  name: string;
+  price: number;
+  getTotalPrice(discount: number): number
+}
+
+class Product implements IProduct {
+  name: string;
+  price: number;
+
+  constructor(name: string, price: number) {
+    this.name = name;
+    this.price = price;
+  }
+
+  getTotalPrice(discount: number): number {
+    return this.price - discount;
+  }
+}
+
+const product = new Product("Milk", 250);
+```
+
+# Section 6 - Type Guards
+
+In order to find specific type when we use union types, we can use the Type Guard. `typeof`, `instanceof`, `in` are the example of Type Guards.
+
+```ts
+// typeof
+function showMessage(message: string | object): void {
+  if(typeof message === 'string') {
+    console.log("The type is string");
+  } else if(typeof message === 'object') {
+    console.log("The type is object");
+  }
+}
+
+showMessage({ name: "John Doe" });
+```
+
+```ts
+// instanceof
+class User {
+  id: number;
+}
+
+class Product {
+  name: string;
+}
+
+function showMessage(message: User | Product): void {
+  if(message instanceof User) {
+    console.log("Message is an instance of User");
+  } else if(message instanceof Product) {
+    console.log("Message is an instance of Product");
+  }
+}
+
+showMessage(new User());
 ```
