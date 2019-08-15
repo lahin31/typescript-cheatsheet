@@ -1,5 +1,5 @@
-# TypeScript Cheat Sheet
-Cheat Sheet for TypeScript. Please file an issue if you encounter a problem and PR always welcome.
+# TypeScript Cheatsheet
+Cheatsheet for TypeScript. Please make an issue if you encounter a problem and PR always welcome.
 
 ### Table of Contents
 
@@ -14,11 +14,18 @@ Cheat Sheet for TypeScript. Please file an issue if you encounter a problem and 
   - [Enum](#enum)
   - [Union](#union)
   - [Any](#any)
+  - [Unknown](#unknown)
   - [Void](#void)
 - [Section 3: Interface](#section-3-interface)
 - [Section 4: Type Alias](#section-4-type-alias)
+- [Section 5: Class](#section-5-class)
+- [Section 6: Type Guards](#section-6-type-guards)
+- [Section 7: Generics](#section-7-generics)
+- [Section 8: Keyof & Indexed Access Types](#section-8-keyof-and-indexed-access-types)
+- [Section 9: Mapped Types](#section-9-mapped-types)
 
 </details>
+
 # Section 1: Setup
 
 1) Go to [TypeScript](https://www.typescriptlang.org) download from there or just type `npm install -g typescript`.
@@ -104,9 +111,21 @@ function getValue(): any {
 }
 ```
 
+## Unknown
+
+`unknown` is the type-safe counterpart of `any`. Anything is assignable to `unknown`, but `unknown` isn’t assignable to anything but itself.
+
+```ts
+let value: unknown;
+
+value.trim();   // Error
+value();        // Error
+new value();    // Error
+```
+
 ## Void 
 
-This is usefull when you are not returning anything from the function(this is not mandatory to include).
+This is useful when you are not returning anything from the function(this is not mandatory to include).
 
 ```ts
 function getError(): void {
@@ -169,8 +188,6 @@ let rectangle: Rectangle = {
 }
 ```
 
-> Aliasing doesn’t actually create a new type - it creates a new name to refer to that type. Aliasing a primitive is not terribly useful, though it can be used as a form of documentation.
-
 # Section 5: Class
 
 Just like the other language TypeScript has a class feature. 
@@ -193,7 +210,7 @@ class Product {
 const product = new Product("Milk", 250);
 ```
 
-We can add interface for product class.
+We can add interface for Product class.
 
 ```ts
 interface IProduct {
@@ -219,9 +236,9 @@ class Product implements IProduct {
 const product = new Product("Milk", 250);
 ```
 
-# Section 6 - Type Guards
+# Section 6: Type Guards
 
-In order to find specific type when we use union types, we can use the Type Guard. `typeof`, `instanceof`, `in` are the example of Type Guards.
+In order to find specific type when we use union types, we can use the Type Guard. `typeof`, `instanceof`, `in` are the examples of Type Guard.
 
 ```ts
 // typeof
@@ -255,4 +272,91 @@ function showMessage(message: User | Product): void {
 }
 
 showMessage(new User());
+```
+
+# Section 7: Generics
+
+We can specifically pass the type to any function but what if when we don't know the type to pass, Generic can help us.
+
+```ts
+// Generic Function
+function removeItem<T>(arr: Array<T>, item: T): Array<T> {
+  let index = arr.findIndex(i => i === item);
+  arr.splice(index, 1);
+  return arr;
+}
+
+console.log(removeItem([1, 2, 3], 2));
+console.log(removeItem(['John', 'Michael'], 'John'));
+```
+
+```ts
+// Generic Class
+class Country {
+  protected countryName: string;
+
+  constructor(countryName: string) {
+    this.countryName = countryName;
+  }
+
+  getName() {
+    return this.countryName;
+  }
+}
+
+class Australia extends Country { }
+class England extends Country { }
+
+let australia = new Australia('Australia');
+let england = new England('England');
+
+function getName<T>(country: T): T {
+  return country;
+}
+
+console.log(getName(australia));
+console.log(getName(england));
+```
+
+# Section 8: Keyof & Indexed Access Types
+
+In TypeScript `keyof` operator extracts the set of keys for a given type.
+
+```ts
+interface IUser {
+  name: string;
+  age: number;
+}
+
+type UserKeys = keyof IUser; // "name" | "age"
+```
+
+Using the `keyof` operator we can do Indexed Access Types. The key parameter can get the type of each key of obj.
+
+```ts
+function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+const user = {
+  id: 1,
+  name: "John Doe"
+}
+
+console.log(getValue(user, "id"));
+```
+
+# Section 9: Mapped Types
+
+In TypeScript Mapped Types allow us to create new types from existing types.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+type readonlyPerson = {
+  readonly [P in keyof Person]: Person[p]
+}
 ```
