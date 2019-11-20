@@ -1,0 +1,14 @@
+{
+  "name": "typescript-cheatsheet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write README.md"
+  },
+  "repository": "https://github.com/lahin31/typescript-cheatsheet.git",
+  "author": "lahin31 <muhammad.lahin@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}

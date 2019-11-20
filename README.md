@@ -1,4 +1,5 @@
 # TypeScript Cheatsheet
+
 Cheatsheet for TypeScript. Please make an issue if you encounter a problem and PR always welcome.
 
 ### Table of Contents
@@ -30,8 +31,8 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
 
 # Section 1: Setup
 
-1) Go to [TypeScript](https://www.typescriptlang.org) download from there or just type `npm install -g typescript`.
-2) Check the installed version `tsc -v`.
+1. Go to [TypeScript](https://www.typescriptlang.org) download from there or just type `npm install -g typescript`.
+2. Check the installed version `tsc -v`.
 
 # Section 2: Data Types
 
@@ -43,7 +44,7 @@ There are some basic types available for TypeScript. Such as `string`, `number`,
 let x: number = 5;
 let name: string = "John Doe";
 let showErrorMsg: boolean = true;
-let numbers: Array<number> = [1, 2, 3]
+let numbers: Array<number> = [1, 2, 3];
 let students: Array<string> = ["John Doe", "Michael"];
 
 function showDetail(name: string, age: number): void {
@@ -59,8 +60,8 @@ This is something new in TypeScript 3. A Tuple is an array but the number of ele
 let product: [string, number];
 product = ["John", 10];
 
-let val: [string, ...number[]]
-val = ['John', 5, 7, 9]
+let val: [string, ...number[]];
+val = ["John", 5, 7, 9];
 ```
 
 ## Enum
@@ -89,7 +90,7 @@ TypeScript allows us to assign more than one data type for a variable or for a f
 
 ```ts
 let address: string | number;
-address = "New York"
+address = "New York";
 // or
 address = 3100;
 
@@ -120,12 +121,12 @@ function getValue(): any {
 ```ts
 let value: unknown;
 
-value.trim();   // Error
-value();        // Error
-new value();    // Error
+value.trim(); // Error
+value(); // Error
+new value(); // Error
 ```
 
-## Void 
+## Void
 
 This is useful when you are not returning anything from the function(this is not mandatory to include).
 
@@ -141,7 +142,7 @@ Use `never` when a function doesn't return anything. This can be used when a fun
 
 ```ts
 function error(message: string): never {
-    throw new Error(message);
+  throw new Error(message);
 }
 ```
 
@@ -162,7 +163,7 @@ let user: User = {
   getPoints(point: number): number {
     return point * point;
   }
-}
+};
 ```
 
 We can make properties and parameters optional.
@@ -179,7 +180,7 @@ let user: User = {
   getPoints(): number {
     return 5 * 5;
   }
-}
+};
 ```
 
 # Section 4: Type Alias
@@ -197,12 +198,12 @@ let rectangle: Rectangle = {
   getArea(width: number, height: number): number {
     return width * height;
   }
-}
+};
 ```
 
 # Section 5: Class
 
-Just like the other language TypeScript has a class feature. 
+Just like the other language TypeScript has a class feature.
 
 ```ts
 class Product {
@@ -228,7 +229,7 @@ We can add interface for Product class.
 interface IProduct {
   name: string;
   price: number;
-  getTotalPrice(discount: number): number
+  getTotalPrice(discount: number): number;
 }
 
 class Product implements IProduct {
@@ -261,7 +262,7 @@ function removeItem<T>(arr: Array<T>, item: T): Array<T> {
 }
 
 console.log(removeItem([1, 2, 3], 2));
-console.log(removeItem(['John', 'Michael'], 'John'));
+console.log(removeItem(["John", "Michael"], "John"));
 ```
 
 ```ts
@@ -278,11 +279,11 @@ class Country {
   }
 }
 
-class Australia extends Country { }
-class England extends Country { }
+class Australia extends Country {}
+class England extends Country {}
 
-let australia = new Australia('Australia');
-let england = new England('England');
+let australia = new Australia("Australia");
+let england = new England("England");
 
 function getName<T>(country: T): T {
   return country;
@@ -326,9 +327,9 @@ function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
 const user = {
   id: 1,
   name: "John Doe"
-}
+};
 
-console.log(getValue(user, "id")) // 1
+console.log(getValue(user, "id")); // 1
 ```
 
 # Section 9: Mapped Types
@@ -342,8 +343,8 @@ interface Person {
 }
 
 type readonlyPerson = {
-  readonly [P in keyof Person]: Person[p]
-}
+  readonly [P in keyof Person]: Person[p];
+};
 ```
 
 # Section 10: Type Guards
@@ -353,9 +354,9 @@ In order to find specific type when we use union types, we can use the Type Guar
 ```ts
 // typeof
 function showMessage(message: string | object): void {
-  if(typeof message === 'string') {
+  if (typeof message === "string") {
     console.log("The type is string");
-  } else if(typeof message === 'object') {
+  } else if (typeof message === "object") {
     console.log("The type is object");
   }
 }
@@ -374,9 +375,9 @@ class Product {
 }
 
 function showMessage(message: User | Product): void {
-  if(message instanceof User) {
+  if (message instanceof User) {
     console.log("Message is an instance of User");
-  } else if(message instanceof Product) {
+  } else if (message instanceof Product) {
     console.log("Message is an instance of Product");
   }
 }
