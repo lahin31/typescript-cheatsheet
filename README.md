@@ -16,13 +16,15 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
   - [Any](#any)
   - [Unknown](#unknown)
   - [Void](#void)
+  - [Never](#never)
 - [Section 3: Interface](#section-3-interface)
 - [Section 4: Type Alias](#section-4-type-alias)
 - [Section 5: Class](#section-5-class)
-- [Section 6: Type Guards](#section-6-type-guards)
-- [Section 7: Generics](#section-7-generics)
+- [Section 6: Generics](#section-6-generics)
+- [Section 7: Symbol](#section-7-symbol)
 - [Section 8: Keyof & Indexed Access Types](#section-8-keyof-and-indexed-access-types)
 - [Section 9: Mapped Types](#section-9-mapped-types)
+- [Section 10: Type Guards](#section-10-type-guards)
 
 </details>
 
@@ -133,6 +135,16 @@ function getError(): void {
 }
 ```
 
+## Never
+
+Use `never` when a function doesn't return anything. This can be used when a function returns error.
+
+```ts
+function error(message: string): never {
+    throw new Error(message);
+}
+```
+
 # Section 3: Interface
 
 An Interface is a group of properties and methods that describe an object but neither does initialization nor implementation.
@@ -236,45 +248,7 @@ class Product implements IProduct {
 const product = new Product("Milk", 250);
 ```
 
-# Section 6: Type Guards
-
-In order to find specific type when we use union types, we can use the Type Guard. `typeof`, `instanceof`, `in` are the examples of Type Guard.
-
-```ts
-// typeof
-function showMessage(message: string | object): void {
-  if(typeof message === 'string') {
-    console.log("The type is string");
-  } else if(typeof message === 'object') {
-    console.log("The type is object");
-  }
-}
-
-showMessage({ name: "John Doe" });
-```
-
-```ts
-// instanceof
-class User {
-  id: number;
-}
-
-class Product {
-  name: string;
-}
-
-function showMessage(message: User | Product): void {
-  if(message instanceof User) {
-    console.log("Message is an instance of User");
-  } else if(message instanceof Product) {
-    console.log("Message is an instance of Product");
-  }
-}
-
-showMessage(new User());
-```
-
-# Section 7: Generics
+# Section 6: Generics
 
 We can specifically pass the type to any function but what if when we don't know the type to pass, Generic can help us.
 
@@ -318,6 +292,17 @@ console.log(getName(australia));
 console.log(getName(england));
 ```
 
+# Section 7: Symbol
+
+Symbol is a primitive data type, which is also immutable and unique.
+
+```ts
+let sym1 = Symbol("key");
+let sym2 = Symbol("key");
+
+sym1 === sym2; // false
+```
+
 # Section 8: Keyof & Indexed Access Types
 
 In TypeScript `keyof` operator extracts the set of keys for a given type.
@@ -343,7 +328,7 @@ const user = {
   name: "John Doe"
 }
 
-console.log(getValue(user, "id"));
+console.log(getValue(user, "id")) // 1
 ```
 
 # Section 9: Mapped Types
@@ -359,4 +344,42 @@ interface Person {
 type readonlyPerson = {
   readonly [P in keyof Person]: Person[p]
 }
+```
+
+# Section 10: Type Guards
+
+In order to find specific type when we use union types, we can use the Type Guard. `typeof`, `instanceof`, `in` are the examples of Type Guard.
+
+```ts
+// typeof
+function showMessage(message: string | object): void {
+  if(typeof message === 'string') {
+    console.log("The type is string");
+  } else if(typeof message === 'object') {
+    console.log("The type is object");
+  }
+}
+
+showMessage({ name: "John Doe" });
+```
+
+```ts
+// instanceof
+class User {
+  id: number;
+}
+
+class Product {
+  name: string;
+}
+
+function showMessage(message: User | Product): void {
+  if(message instanceof User) {
+    console.log("Message is an instance of User");
+  } else if(message instanceof Product) {
+    console.log("Message is an instance of Product");
+  }
+}
+
+showMessage(new User());
 ```
