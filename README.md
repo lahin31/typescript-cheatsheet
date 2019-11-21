@@ -18,6 +18,7 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
   - [Unknown](#unknown)
   - [Void](#void)
   - [Never](#never)
+  - [Readonly](#readonly)
 - [Section 3: Interface](#section-3-interface)
 - [Section 4: Type Alias](#section-4-type-alias)
 - [Section 5: Class](#section-5-class)
@@ -144,6 +145,14 @@ Use `never` when a function doesn't return anything. This can be used when a fun
 function error(message: string): never {
   throw new Error(message);
 }
+```
+
+## Readonly
+
+When we use readonly, we can’t assign them with other variables, can’t update or delete. This avoids unexpected mutation.
+
+```ts
+let students: readonly Array<string> = ["John", "Michael", "Adam"]
 ```
 
 # Section 3: Interface
