@@ -18,6 +18,7 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
   - [Unknown](#unknown)
   - [Void](#void)
   - [Never](#never)
+  - [Partial](#partial)
   - [Readonly](#readonly)
 - [Section 3: Interface](#section-3-interface)
 - [Section 4: Type Alias](#section-4-type-alias)
@@ -73,7 +74,7 @@ Enum allows us to declare a set of collection in which we can assign them a pert
 enum ProgrammingLanguage {
   javascript,
   python,
-  php
+  php,
 }
 
 // This will be changed as
@@ -81,7 +82,7 @@ enum ProgrammingLanguage {
 enum ProgrammingLanguage {
   javascript = 0,
   python = 1,
-  php = 2
+  php = 2,
 }
 ```
 
@@ -147,12 +148,28 @@ function error(message: string): never {
 }
 ```
 
+## Partial
+
+Partial makes all properties of the type optional.
+
+```ts
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+let user: Partial<User> = {
+  id: 1,
+};
+```
+
 ## Readonly
 
 When we use readonly, we can’t assign them with other variables, can’t update or delete. This avoids unexpected mutation.
 
 ```ts
-let students: readonly Array<string> = ["John", "Michael", "Adam"]
+let students: readonly Array<string> = ["John", "Michael", "Adam"];
 ```
 
 # Section 3: Interface
@@ -171,7 +188,7 @@ let user: User = {
   age: 25,
   getPoints(point: number): number {
     return point * point;
-  }
+  },
 };
 ```
 
@@ -188,7 +205,7 @@ let user: User = {
   age: 25,
   getPoints(): number {
     return 5 * 5;
-  }
+  },
 };
 ```
 
@@ -206,7 +223,7 @@ interface Rectangle {
 let rectangle: Rectangle = {
   getArea(width: number, height: number): number {
     return width * height;
-  }
+  },
 };
 ```
 
@@ -265,7 +282,7 @@ We can specifically pass the type to any function but what if when we don't know
 ```ts
 // Generic Function
 function removeItem<T>(arr: Array<T>, item: T): Array<T> {
-  let index = arr.findIndex(i => i === item);
+  let index = arr.findIndex((i) => i === item);
   arr.splice(index, 1);
   return arr;
 }
@@ -335,7 +352,7 @@ function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
 
 const user = {
   id: 1,
-  name: "John Doe"
+  name: "John Doe",
 };
 
 console.log(getValue(user, "id")); // 1
