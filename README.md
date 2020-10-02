@@ -28,6 +28,7 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
 - [Section 8: Keyof & Indexed Access Types](#section-8-keyof-and-indexed-access-types)
 - [Section 9: Mapped Types](#section-9-mapped-types)
 - [Section 10: Type Guards](#section-10-type-guards)
+- [Section 11: Namespaces](#section-11-namespaces)
 
 </details>
 
@@ -409,4 +410,32 @@ function showMessage(message: User | Product): void {
 }
 
 showMessage(new User());
+```
+
+# Section 11 Namespaces
+
+You might have come across the term `namespace` while working with TypeScript. And you might wonder what on earth is a namespace? We will be dealing with the basic concepts of namespaces and how we can use them to write efficient codes.
+
+```ts
+namespace AcmeCorp.Logging {
+  export class Logger {
+       static log(msg: string) : void {
+        console.log(msg);
+      };
+  }
+}
+
+/// <reference path="AcmeCorp.Logging.ts" />
+
+//Alias
+import logger = AcmeCorp.Logging.Logger;
+
+namespace AcmeCorp.OnlineStore {
+  class OrderLogic {
+    calcOrder(): number {
+        logger.log("calculating order");
+        return 0;
+    }
+  }
+}
 ```
