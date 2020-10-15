@@ -20,6 +20,7 @@ Cheatsheet for TypeScript. Please make an issue if you encounter a problem and P
   - [Never](#never)
   - [Partial](#partial)
   - [Readonly](#readonly)
+  - [Pick](#pick)
 - [Section 3: Interface](#section-3-interface)
 - [Section 4: Type Alias](#section-4-type-alias)
 - [Section 5: Class](#section-5-class)
@@ -171,6 +172,24 @@ When we use readonly, we can’t assign them with other variables, can’t updat
 
 ```ts
 let students: readonly Array<string> = ["John", "Michael", "Adam"];
+```
+
+## Pick
+
+It allows you to create a new type from an existing interface.
+
+```ts
+interface User {
+  id: number
+  name: string
+  email: string
+}
+
+function foo(args: Pick<User, "name" | "email">) {
+  console.log(args);
+}
+
+foo({ name: "John Doe", email: "doe@gmail.com" });
 ```
 
 # Section 3: Interface
