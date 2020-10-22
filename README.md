@@ -48,6 +48,7 @@ There are some basic types available for TypeScript. Such as `string`, `number`,
 let x: number = 5;
 let name: string = "John Doe";
 let showErrorMsg: boolean = true;
+let numbers: number[] = [1, 2, 3];
 let numbers: Array<number> = [1, 2, 3];
 let students: Array<string> = ["John Doe", "Michael"];
 
